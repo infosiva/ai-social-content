@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+/* ── Mobile: prevent horizontal overflow on all devices ── */
+html, body { overflow-x: hidden; max-width: 100%; }
