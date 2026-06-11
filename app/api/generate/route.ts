@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { AI_LIMITER } from '@/lib/rateLimit'
 
 export async function POST(req: NextRequest) {
+  const limited = AI_LIMITER.check(req)
+  if (limited) return limited
   try {
     const { prompt, platform, style } = await req.json()
 
@@ -51,7 +54,7 @@ export async function POST(req: NextRequest) {
     const data = await res.json() as { image: string; finish_reason: string }
     return NextResponse.json({ image: `data:image/jpeg;base64,${data.image}`, platform, style })
   } catch (e: unknown) {
-    console.error('[generate]', e)
+    console.error('[ai-social-content][generate]', e)
     return NextResponse.json({ error: 'Image generation failed' }, { status: 500 })
   }
 }
