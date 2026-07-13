@@ -40,6 +40,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="google-adsense-account" content="ca-pub-4237294630161176" />
         {themeStyle && (
           <style dangerouslySetInnerHTML={{ __html: themeStyle }} />
         )}
