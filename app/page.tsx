@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import Logo from '@/components/Logo'
 
 const ease = [0.23, 1, 0.32, 1] as const
 
@@ -176,9 +177,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b border-stone-200/60 bg-white/80 backdrop-blur-xl">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-rose-600 text-white font-black text-sm select-none">
-              S
-            </span>
+            <Logo />
             <span className="text-lg font-bold tracking-tight text-stone-900">
               Social<span className="text-rose-600">Spark</span>
             </span>

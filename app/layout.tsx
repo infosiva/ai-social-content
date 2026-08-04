@@ -67,7 +67,6 @@ export default async function RootLayout({
         {children}
         <FloatingChatWrapper />
         <FeedbackWidget siteName="SocialSpark" accentColor="#e11d48" />
-        <Script defer data-site="ai-social-content.vercel.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
       </body>
     </html>
   );
