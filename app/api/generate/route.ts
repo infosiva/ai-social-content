@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AI_LIMITER } from '@/lib/rateLimit'
+import { getSiteFlags } from '@/lib/flags'
 
 export async function POST(req: NextRequest) {
   const limited = AI_LIMITER.check(req)
   if (limited) return limited
   try {
-    const { prompt, platform, style } = await req.json()
+    const flags = await getSiteFlags('socialspark')
+    const body = await req.json()
+    const prompt = body.prompt
+    const platform = flags.platform_preview ? body.platform : 'instagram'
+    const style = flags.tone_selector ? body.style : 'photorealistic'
 
     if (!prompt) return NextResponse.json({ error: 'Prompt required' }, { status: 400 })
 
