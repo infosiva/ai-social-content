@@ -5,6 +5,7 @@ import FeedbackWidget from '@/components/FeedbackWidget'
 import Script from "next/script";
 import { loadSiteTheme, buildThemeStyleTag } from '@/lib/theme-loader'
 
+import { MotionProvider } from "@infosiva/shared-ui/modern";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-social-content.vercel.app"),
   title: "SocialSpark — AI Social Media Image Generator",
@@ -70,7 +71,7 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <FloatingChatWrapper />
         <FeedbackWidget siteName="SocialSpark" accentColor="#e11d48" />
       </body>

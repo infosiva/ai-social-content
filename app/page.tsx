@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Logo from '@/components/Logo'
+import { MagneticButton } from "@infosiva/shared-ui/modern";
 
 const ease = [0.23, 1, 0.32, 1] as const
 
@@ -214,12 +215,15 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-8">
-            <Link
-              href="/generate"
-              className="inline-flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors duration-150 active:scale-[0.97] shadow-sm shadow-rose-200/60"
-            >
-              Generate your first image
-              <span className="text-rose-200">→</span>
+            <Link href="/generate" className="inline-flex">
+              <MagneticButton
+                tabIndex={-1}
+                style={{ background: "#e11d48" }}
+                className="inline-flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors duration-150 active:scale-[0.97] shadow-sm shadow-rose-200/60"
+              >
+                Generate your first image
+                <span className="text-rose-200">→</span>
+              </MagneticButton>
             </Link>
           </div>
 
