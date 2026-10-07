@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AI_LIMITER } from '@/lib/rateLimit'
+import { log } from '@/lib/log'
 import { getSiteFlags } from '@/lib/flags'
 
 export async function POST(req: NextRequest) {
@@ -12,10 +13,10 @@ export async function POST(req: NextRequest) {
     const platform = flags.platform_preview ? body.platform : 'instagram'
     const style = flags.tone_selector ? body.style : 'photorealistic'
 
-    if (!prompt) return NextResponse.json({ error: 'Prompt required' }, { status: 400 })
+    if (!prompt || typeof prompt !== 'string') return NextResponse.json({ error: 'Prompt required' }, { status: 400 })
 
     const apiKey = process.env.STABILITY_API_KEY
-    if (!apiKey) return NextResponse.json({ error: 'STABILITY_API_KEY not configured' }, { status: 500 })
+    if (!apiKey) return NextResponse.json({ error: 'Image generation is temporarily unavailable. Please try again later.' })
 
     // Platform-based dimensions
     const dimensions: Record<string, { width: number; height: number }> = {
@@ -52,14 +53,14 @@ export async function POST(req: NextRequest) {
     })
 
     if (!res.ok) {
-      const err = await res.text()
-      return NextResponse.json({ error: `Stability AI error: ${err.slice(0, 200)}` }, { status: res.status })
+      log('warn', 'generate.upstream', { status: res.status })
+      return NextResponse.json({ error: 'Image generation is busy right now. Please try again in a moment.' })
     }
 
     const data = await res.json() as { image: string; finish_reason: string }
     return NextResponse.json({ image: `data:image/jpeg;base64,${data.image}`, platform, style })
   } catch (e: unknown) {
-    console.error('[ai-social-content][generate]', e)
-    return NextResponse.json({ error: 'Image generation failed' }, { status: 500 })
+    log('error', 'generate.failed', { msg: e instanceof Error ? e.message : 'unknown' })
+    return NextResponse.json({ error: 'Image generation failed. Please try again.' })
   }
 }

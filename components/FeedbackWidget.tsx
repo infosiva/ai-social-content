@@ -14,10 +14,10 @@ const TYPE_LABELS: Record<FType, string> = {
   bug: '🐛 Bug',
   idea: '💡 Idea',
   compliment: '❤️ Love it',
-  other: '💬 Other',
+  other: 'Other',
 }
 
-export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor = '#e11d48' }: Props) {
+export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor = 'var(--accent)' }: Props) {
   const [open, setOpen] = useState(false)
   const [type, setType] = useState<FType>('idea')
   const [rating, setRating] = useState(0)
@@ -62,16 +62,16 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
           position: 'fixed', bottom: 24, left: 24,
           height: 38, borderRadius: 20,
           padding: '0 16px',
-          background: 'white',
-          border: `1px solid #e7e5e4`,
+          background: 'var(--surface)',
+          border: `1px solid var(--line)`,
           cursor: 'pointer',
           display: 'flex', alignItems: 'center', gap: 6,
-          fontSize: 12.5, fontWeight: 600, color: '#44403c',
+          fontSize: 12.5, fontWeight: 600, color: 'var(--ink)',
           boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
           zIndex: 1000,
         }}
       >
-        <span style={{ fontSize: 14 }}>💬</span> Feedback
+        Feedback
       </motion.button>
 
       <AnimatePresence>
@@ -84,8 +84,8 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
             style={{
               position: 'fixed', bottom: 72, left: 24,
               width: 300,
-              background: '#fffaf5',
-              border: '1px solid #e7e5e4',
+              background: 'var(--bg)',
+              border: '1px solid var(--line)',
               borderRadius: 16,
               zIndex: 1000, overflow: 'hidden',
               boxShadow: '0 8px 40px rgba(0,0,0,0.10)',
@@ -94,18 +94,18 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
             {/* Header */}
             <div style={{
               padding: '12px 16px',
-              borderBottom: '1px solid #f5f5f4',
-              fontWeight: 700, fontSize: 13, color: '#1c1917',
-              background: 'white',
+              borderBottom: '1px solid var(--line)',
+              fontWeight: 700, fontSize: 13, color: 'var(--ink)',
+              background: 'var(--surface)',
             }}>
               Share feedback
             </div>
 
             {status === 'done' ? (
-              <div style={{ padding: 24, textAlign: 'center', color: '#44403c' }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>🎉</div>
+              <div style={{ padding: 24, textAlign: 'center', color: 'var(--ink)' }}>
+                
                 <p style={{ fontWeight: 600, marginBottom: 4 }}>Thanks!</p>
-                <p style={{ fontSize: 12, color: '#78716c' }}>We read every message.</p>
+                <p style={{ fontSize: 12, color: 'var(--ink-2)' }}>We read every message.</p>
               </div>
             ) : (
               <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -117,9 +117,9 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
                       onClick={() => setType(t)}
                       style={{
                         padding: '4px 10px', borderRadius: 20, fontSize: 11.5, fontWeight: 600, cursor: 'pointer',
-                        border: type === t ? `1.5px solid ${accentColor}` : '1.5px solid #e7e5e4',
-                        background: type === t ? '#fff1f2' : 'white',
-                        color: type === t ? accentColor : '#78716c',
+                        border: type === t ? `1.5px solid ${accentColor}` : '1.5px solid var(--line)',
+                        background: type === t ? 'color-mix(in oklab, var(--accent) 10%, var(--bg))' : 'var(--surface)',
+                        color: type === t ? accentColor : 'var(--ink-2)',
                         transition: 'all 150ms',
                       }}
                     >
@@ -138,7 +138,7 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
                       onMouseLeave={() => setHoverRating(0)}
                       style={{
                         fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', padding: '2px',
-                        color: n <= displayRating ? '#f59e0b' : '#d6d3d1',
+                        color: n <= displayRating ? 'var(--accent)' : 'var(--line)',
                         transition: 'color 100ms',
                       }}
                     >
@@ -154,9 +154,9 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
                   placeholder="What's on your mind?"
                   rows={3}
                   style={{
-                    width: '100%', background: 'white',
-                    border: '1px solid #e7e5e4', borderRadius: 10,
-                    padding: '8px 10px', fontSize: 12.5, color: '#1c1917',
+                    width: '100%', background: 'var(--surface)',
+                    border: '1px solid var(--line)', borderRadius: 10,
+                    padding: '8px 10px', fontSize: 12.5, color: 'var(--ink)',
                     resize: 'none', outline: 'none', boxSizing: 'border-box',
                     fontFamily: 'inherit',
                   }}
@@ -169,23 +169,23 @@ export default function FeedbackWidget({ siteName = 'SocialSpark', accentColor =
                   placeholder="Email (optional — for follow-up)"
                   type="email"
                   style={{
-                    width: '100%', background: 'white',
-                    border: '1px solid #e7e5e4', borderRadius: 10,
-                    padding: '7px 10px', fontSize: 12.5, color: '#1c1917',
+                    width: '100%', background: 'var(--surface)',
+                    border: '1px solid var(--line)', borderRadius: 10,
+                    padding: '7px 10px', fontSize: 12.5, color: 'var(--ink)',
                     outline: 'none', boxSizing: 'border-box',
                     fontFamily: 'inherit',
                   }}
                 />
 
                 {status === 'error' && (
-                  <p style={{ fontSize: 11.5, color: '#e11d48', margin: 0 }}>Failed to send — please try again.</p>
+                  <p style={{ fontSize: 11.5, color: 'var(--accent)', margin: 0 }}>Failed to send — please try again.</p>
                 )}
 
                 <button
                   onClick={submit}
                   disabled={!message.trim() || status === 'sending'}
                   style={{
-                    background: accentColor, color: 'white',
+                    background: accentColor, color: 'var(--on-accent)',
                     border: 'none', borderRadius: 10, padding: '8px 0',
                     fontSize: 13, fontWeight: 600, cursor: 'pointer',
                     opacity: !message.trim() || status === 'sending' ? 0.5 : 1,

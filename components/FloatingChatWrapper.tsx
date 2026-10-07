@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 export default function FloatingChatWrapper() {
   const [open, setOpen] = useState(false)
   const [msgs, setMsgs] = useState<{ role: 'user' | 'bot'; text: string }[]>([
-    { role: 'bot', text: "Hi! Need help with captions, hashtags or ad copy? I'll make your posts shine ✍️" },
+    { role: 'bot', text: "Hi! Need help with captions, hashtags or ad copy? I'll help your posts shine." },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -42,16 +42,16 @@ export default function FloatingChatWrapper() {
         style={{
           position: 'fixed', bottom: 24, right: 24,
           width: 52, height: 52, borderRadius: '50%',
-          background: 'linear-gradient(135deg,#e11d48,#be123c)',
+          background: 'linear-gradient(135deg,var(--accent),color-mix(in oklab, var(--accent) 70%, var(--ink)))',
           border: 'none', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           boxShadow: '0 4px 20px rgba(225,29,72,0.30)',
           zIndex: 1000, fontSize: 20,
-          color: 'white',
+          color: 'var(--on-accent)',
           transition: 'box-shadow 150ms',
         }}
       >
-        {open ? '✕' : '✍️'}
+        {open ? '✕' : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4a2.5 2.5 0 0 1-1-2z"/></svg>}
       </motion.button>
 
       <AnimatePresence>
@@ -64,8 +64,8 @@ export default function FloatingChatWrapper() {
             style={{
               position: 'fixed', bottom: 88, right: 24,
               width: 320, height: 420,
-              background: '#fffaf5',
-              border: '1px solid #e7e5e4',
+              background: 'var(--bg)',
+              border: '1px solid var(--line)',
               borderRadius: 16,
               display: 'flex', flexDirection: 'column',
               zIndex: 1000, overflow: 'hidden',
@@ -75,15 +75,15 @@ export default function FloatingChatWrapper() {
             {/* Header */}
             <div style={{
               padding: '12px 16px',
-              borderBottom: '1px solid #f5f5f4',
-              fontSize: 13, fontWeight: 700, color: '#1c1917',
+              borderBottom: '1px solid var(--line)',
+              fontSize: 13, fontWeight: 700, color: 'var(--ink)',
               display: 'flex', alignItems: 'center', gap: 8,
-              background: 'white',
+              background: 'var(--surface)',
             }}>
               <span style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 width: 24, height: 24, borderRadius: 8,
-                background: '#e11d48', color: 'white', fontSize: 11, fontWeight: 800,
+                background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 11, fontWeight: 800,
               }}>S</span>
               SocialSpark AI
             </div>
@@ -93,14 +93,14 @@ export default function FloatingChatWrapper() {
               flex: 1, overflowY: 'auto',
               padding: '12px 14px',
               display: 'flex', flexDirection: 'column', gap: 8,
-              background: '#fffaf5',
+              background: 'var(--bg)',
             }}>
               {msgs.map((m, i) => (
                 <div key={i} style={{
                   alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-                  background: m.role === 'user' ? '#e11d48' : 'white',
-                  color: m.role === 'user' ? 'white' : '#1c1917',
-                  border: m.role === 'user' ? 'none' : '1px solid #e7e5e4',
+                  background: m.role === 'user' ? 'var(--accent)' : 'var(--surface)',
+                  color: m.role === 'user' ? 'var(--on-accent)' : 'var(--ink)',
+                  border: m.role === 'user' ? 'none' : '1px solid var(--line)',
                   padding: '8px 12px',
                   borderRadius: m.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
                   fontSize: 12.5, lineHeight: '1.45',
@@ -112,9 +112,9 @@ export default function FloatingChatWrapper() {
               {loading && (
                 <div style={{
                   alignSelf: 'flex-start',
-                  background: 'white', border: '1px solid #e7e5e4',
+                  background: 'var(--surface)', border: '1px solid var(--line)',
                   padding: '8px 14px', borderRadius: '12px 12px 12px 4px',
-                  fontSize: 12, color: '#a8a29e',
+                  fontSize: 12, color: 'var(--ink-2)',
                 }}>
                   Thinking…
                 </div>
@@ -124,9 +124,9 @@ export default function FloatingChatWrapper() {
             {/* Input */}
             <div style={{
               padding: '10px 12px',
-              borderTop: '1px solid #f5f5f4',
+              borderTop: '1px solid var(--line)',
               display: 'flex', gap: 8,
-              background: 'white',
+              background: 'var(--surface)',
             }}>
               <input
                 value={input}
@@ -135,19 +135,19 @@ export default function FloatingChatWrapper() {
                 placeholder="Ask about captions, hashtags…"
                 style={{
                   flex: 1,
-                  background: '#fafaf9',
-                  border: '1px solid #e7e5e4',
+                  background: 'var(--surface)',
+                  border: '1px solid var(--line)',
                   borderRadius: 8, padding: '7px 10px',
-                  fontSize: 12.5, color: '#1c1917', outline: 'none',
+                  fontSize: 12.5, color: 'var(--ink)', outline: 'none',
                 }}
               />
               <button
                 onClick={send}
                 disabled={loading}
                 style={{
-                  background: '#e11d48', border: 'none',
+                  background: 'var(--accent)', border: 'none',
                   borderRadius: 8, padding: '7px 13px',
-                  fontSize: 13, color: '#fff', cursor: 'pointer',
+                  fontSize: 13, color: 'var(--on-accent)', cursor: 'pointer',
                   opacity: loading ? 0.6 : 1,
                   transition: 'opacity 150ms',
                 }}

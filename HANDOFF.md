@@ -1,3 +1,15 @@
+# DESIGN-LOCK — ai-social-content (AI social post generator)
+**Date:** 2026-10-06  **Status:** IN PROGRESS (design finalized before code)
+- Archetype: `weekend-lifestyle` (pickArchetype, avoid-list honoured; default only, hub `theme_ai-social-content.layout.archetype` overrides at runtime via `data-layout`)
+- Default bg / accent: `#fff7fb` / `#c026d3` (registered in design-system/tokens/palette-registry.json, check-palettes = free). Hub palette overrides via `--theme-base`/`--theme-primary`.
+- Background animation: AnimatedBg, default aurora, hub `layout.bgAnimation`/`bgSpeed` overrides; prefers-reduced-motion honoured
+- Logo: speech-bubble + spark glyph, accent key word
+- Demo panel: existing generate flow
+- Telemetry: hub-gated GA4 (consent denied by default), consent-gated usage log, structured error log -> /api/log (JSON lines, no PII, no IP stored)
+- Notes: weekend-lifestyle = centered, rounded, social/creator feel.
+- Pillars: AI chat/feedback use free chain Groq->Gemini->Cerebras with graceful 200 fallback; no new deps; gaps (no evals/RAG changes in this pass) stated in final report.
+
+---
 # HANDOFF — ai-social-content 16-step design pipeline modernization
 **Date:** 2026-08-04  **Status:** IN PROGRESS
 **Goal:** Run full §0-DESIGN-PIPELINE (16 steps) on ai-social-content, ship + verify live.
